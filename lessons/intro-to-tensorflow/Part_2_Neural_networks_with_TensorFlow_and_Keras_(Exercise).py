@@ -167,6 +167,7 @@ plt.show()
 
 print('The label of this image is:', labels[0])
 
+
 # %% [markdown] colab_type="text" id="aa2qHmjUoMNS"
 # ## Build a Simple Neural Network
 #
@@ -181,10 +182,27 @@ print('The label of this image is:', labels[0])
 # %% colab={"base_uri": "https://localhost:8080/", "height": 34} colab_type="code" id="69pQ7bEIoMw0" outputId="edc086d3-29a3-456e-a997-07174c31d87b"
 ## Solution
 
-output = 
+def activation(x):
+    return tf.math.sigmoid(x)
+
+flattened_images = tf.reshape(images, (images.shape[0], -1))
+
+n_input = flattened_images.shape[1]
+
+n_hidden = 256 # number of hidden units
+n_output = 10 # number of output units
+
+W1 = tf.random.normal((n_input, n_hidden))
+W2 = tf.random.normal((n_hidden, n_output))
+B1 = tf.random.normal((1, n_hidden))
+B2 = tf.random.normal((1, n_output))
+
+h = activation(tf.matmul(flattened_images,W1) + B1)
+output = activation(tf.matmul(h,W2) + B2)
 
 # Print the shape of the output. It should be (64,10)
 print('The output has shape:', output.shape)
+
 
 # %% [markdown] colab_type="text" id="p6YnpZowoSz2"
 # Now we have 10 outputs for our network. We want to pass in an image to our network and get out a probability distribution over the classes that tells us the most likely class(es) the image belongs to. Something that looks like this:
@@ -205,6 +223,8 @@ print('The output has shape:', output.shape)
 # %% colab={"base_uri": "https://localhost:8080/", "height": 1000} colab_type="code" id="mPtaB817oTTe" outputId="cada472f-7d69-4581-9d63-d8d62f2f9830"
 ## Solution
 
+def softmax(x):
+    return tf.exp(x) / tf.reduce_sum(tf.exp(x), axis=1, keepdims=True)
 
 # Apply softmax to the output
 probabilities = softmax(output)
@@ -251,7 +271,12 @@ model.summary()
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 289} colab_type="code" id="l-s_J0NC1jdH" outputId="47ce3f16-a287-44df-a0fd-015a5601f29f"
 ## Solution
-my_model_1 = 
+my_model_1 = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28,28,1)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
 
 my_model_1.summary()
 
@@ -293,7 +318,7 @@ print(model_weights_biases)
 # Alternatively, you can also use the `layers` method to get a list of the layers of your model. You can then loop through the layers and check if they have weights before calling `get_weights()`. Let's see an example:
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 68} colab_type="code" id="tcWGSl2rhMif" outputId="84d94a15-3dec-4567-8bba-874ffdbd0c7f"
-# Dislay the layers in our model
+# Display the layers in our model
 model.layers
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 1000} colab_type="code" id="Lw1M2CWmfDU3" outputId="0e3ad837-4ecc-42c5-e10f-12b28635acb5"
@@ -440,6 +465,7 @@ subclassed_model.build((None, 28, 28, 1))
 
 subclassed_model.summary()
 
+
 # %% [markdown] colab_type="text" id="JvaGttubvdXt"
 # Remember that `None` is used to indicate that any integer may be expected. So, we use `None` to indicate batches of any size are acceptable. 
 #
@@ -456,7 +482,25 @@ subclassed_model.summary()
 # %% colab={"base_uri": "https://localhost:8080/", "height": 289} colab_type="code" id="q4FIQ-BPo1BS" outputId="ecf18a3b-192f-4b62-a64e-b4abef841080"
 ## Solution
 
-my_model_2 = 
+class Network2Layers(tf.keras.Model):
+    def __init__(self, num_classes = 2):
+        super().__init__()
+        self.num_classes = num_classes
+        
+        self.input_layer = tf.keras.layers.Flatten()
+        self.hidden_1 = tf.keras.layers.Dense(128, activation = 'relu')
+        self.hidden_2 = tf.keras.layers.Dense(64, activation = 'relu')
+        self.output_layer = tf.keras.layers.Dense(self.num_classes, activation = 'softmax')
+    
+    def call(self, input_tensor):
+        return self.output_layer(
+            self.hidden_2(
+                self.hidden_1(
+                    self.input_layer(
+                        input_tensor))))
+
+my_model_2 = Network2Layers(10)
+my_model_2.build((None, 28,28,1))
 
 my_model_2.summary()
 
@@ -552,5 +596,3 @@ for neurons in layer_neurons:
 model.add(tf.keras.layers.Dense(10, activation='softmax'))
           
 model.summary()    
-
-# %% colab={} colab_type="code" id="ZxZZdnIuA4J2"
