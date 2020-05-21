@@ -203,6 +203,18 @@ print('Accuracy after training: {:.3%}'.format(accuracy))
 # %% colab={"base_uri": "https://localhost:8080/", "height": 105} colab_type="code" id="txuSaeuirvgc" outputId="33af7e60-e292-4788-f168-940351b7e6b4"
 ## Solution
 
+newmodel = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape=(28,28,1)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+newmodel.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics='accuracy')
+
+for image_batch, label_batch in training_batches.take(1):
+    loss, accuracy = newmodel.evaluate(image_batch, label_batch)
 
 print('\nLoss before training: {:,.3f}'.format(loss))
 print('Accuracy before training: {:.3%}'.format(accuracy))
@@ -212,6 +224,11 @@ print('Accuracy before training: {:.3%}'.format(accuracy))
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 275} colab_type="code" id="HzxZtgBDt3Ak" outputId="e487178a-e5dd-411b-e5dc-566983d4aa27"
 ## Solution
+
+history = newmodel.fit(training_batches, epochs=5)
+
+for image_batch, label_batch in training_batches.take(1):
+    loss, accuracy = newmodel.evaluate(image_batch, label_batch)
 
 
 print('\nLoss after training: {:,.3f}'.format(loss))
@@ -223,6 +240,20 @@ print('Accuracy after training: {:.3%}'.format(accuracy))
 # %% colab={"base_uri": "https://localhost:8080/", "height": 243} colab_type="code" id="NOwMUqYzvKtK" outputId="5f653945-0fe4-4699-e2cc-98e67e050dbb"
 ## Solution
 
+for image_batch, label_batch in training_batches.take(1):
+    ps = newmodel.predict(image_batch)
+    first_image = image_batch.numpy().squeeze()[0]
+
+fig, (ax1, ax2) = plt.subplots(figsize=(6,9), ncols=2)
+ax1.imshow(first_image, cmap= plt.cm.binary)
+ax1.axis('off')
+ax2.barh(np.arange(10),ps[0])
+ax2.set_aspect(0.1)
+ax2.set_yticks(np.arange(10))
+ax2.set_yticklabels(np.arange(10))
+ax2.set_title('Class probability')
+ax2.set_xlim(0, 1.1)
+plt.tight_layout()
 
 # %% [markdown] colab_type="text" id="dqREWxKKVwql"
 # ## Automatic Differentiation
@@ -282,5 +313,3 @@ print('\nMaximum Difference:', np.abs(true_grad - dy_dx).max())
 # * [TensorFlow Variables](https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/Variable)
 #
 # Next up you'll write the code for training a neural network on a more complex dataset.
-
-# %% colab={} colab_type="code" id="am0SvU9KWAD3"
