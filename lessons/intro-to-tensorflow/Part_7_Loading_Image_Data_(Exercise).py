@@ -270,9 +270,23 @@ plotImages(augmented_images)
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 34} colab_type="code" executionInfo={"elapsed": 79434, "status": "ok", "timestamp": 1568565129390, "user": {"displayName": "Juan Delgado", "photoUrl": "https://lh3.googleusercontent.com/a-/AAuE7mBDy2JEW1zIU-3rz84z5eQq7vBrp-2QY7sMq--L=s64", "userId": "11913820249708469300"}, "user_tz": 420} id="gnr2xujaVrXe" outputId="21db2696-279b-4651-c029-980294e8cd71"
 ## Solution
-image_gen_train = 
+image_gen_train = ImageDataGenerator(
+    rescale=1.0 / 255,
+    horizontal_flip=True,
+    zoom_range=0.5,
+    shear_range=20,
+    height_shift_range=0.3,
+    width_shift_range=0.4,
+    rotation_range=60,
+)
 
-train_data_gen = 
+train_data_gen = image_gen_train.flow_from_directory(
+    directory=train_dir,
+    batch_size=BATCH_SIZE,
+    shuffle=True,
+    target_size=(IMG_SHAPE, IMG_SHAPE),
+    class_mode="binary",
+)
 
 # %% [markdown] colab_type="text" id="AW-pV5awVrXl"
 # Now, let's use the plotting function we defined above to see how an individual image will look after all these transformations.
