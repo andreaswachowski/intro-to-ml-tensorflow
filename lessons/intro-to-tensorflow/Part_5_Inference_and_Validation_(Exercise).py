@@ -70,12 +70,29 @@ print('\t\u2022 Running on GPU' if tf.test.is_gpu_available() else '\t\u2022 GPU
 # will sub-split our dataset into three sets, where the first set has 60\% of the data, the second set has 20\% of the data, and the third set has the remaining 20\% of the data. A word of **caution**, TensorFlow Datasets does not guarantee the reproducibility of the sub-split operations. That means, that two different users working on the same version of a dataset and using the same sub-split operations could end-up with two different sets of examples. Also, if a user regenerates the data, the sub-splits may no longer be the same. To learn more about `subsplit` and other ways to sub-split your data visit the [Split Documentation](https://www.tensorflow.org/datasets/splits#subsplit).
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 207} colab_type="code" id="bgIzJ4oRLQpd" outputId="a79abec7-96bb-4b4b-cf34-399447bb9814"
+# tfds.Split.ALL has been removed, see
+# https://github.com/tensorflow/datasets/issues/1455
+#
+# subsplit was deprecated and has also been removed,
+# https://github.com/tensorflow/datasets/issues/1998
+#
+# For the new way, see
+# https://www.tensorflow.org/datasets/splits
+
 train_split = 60
 test_val_split = 20
 
-splits = tfds.Split.ALL.subsplit([train_split, test_val_split, test_val_split])
+def splitstr(from_percent, to_percent):
+    return f"train[{from_percent}%:{to_percent}%]+test[{from_percent}%:{to_percent}%]"
+    
+splits = [f"{splitstr(0,train_split)}",
+          f"{splitstr(train_split,train_split+test_val_split)}",
+          f"{splitstr(train_split+test_val_split,100)}"]
 
-dataset, dataset_info = tfds.load('fashion_mnist', split=splits, as_supervised=True, with_info=True)
+print(splits)
+dataset, dataset_info = tfds.load(
+    "fashion_mnist", split=splits, as_supervised=True, with_info=True
+)
 
 training_set, validation_set, test_set = dataset
 
@@ -176,9 +193,11 @@ print('Accuracy on the TEST Set: {:.3%}'.format(accuracy))
 # %% colab={"base_uri": "https://localhost:8080/", "height": 1000} colab_type="code" id="GFmdnOz1pNoa" outputId="538cb017-140c-4ece-e515-08083b3eaf29"
 EPOCHS = 30
 
-history = model.fit(training_batches,
-                    epochs = EPOCHS,
-                    validation_data=validation_batches)
+history = model.fit(
+    training_batches,
+    epochs=EPOCHS,
+    validation_data=validation_batches
+)
 
 # %% [markdown] colab_type="text" id="CMQnPRTwPZbU"
 # ## Loss and Validation Plots
@@ -302,6 +321,25 @@ plt.show()
 # %% colab={"base_uri": "https://localhost:8080/", "height": 1000} colab_type="code" id="IvSOnFdBsfbL" outputId="83adf78f-bbaf-456f-ce94-2449834e5864"
 ## Solution
 
+model = tf.keras.Sequential([
+        tf.keras.layers.Flatten(input_shape=(28,28,1)),
+        tf.keras.layers.Dense(256, activation = 'relu'),
+        tf.keras.layers.Dropout(rate=0.2),
+        tf.keras.layers.Dense(128, activation = 'relu'),
+        tf.keras.layers.Dropout(rate=0.2),
+        tf.keras.layers.Dense(64, activation = 'relu'),
+        tf.keras.layers.Dropout(rate=0.2),
+        tf.keras.layers.Dense(10, activation = 'softmax')
+])
+
+
+model.compile(optimizer='adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['accuracy'])
+
+history = model.fit(training_batches,
+                   epochs=100,
+                   validation_data=validation_batches)
 
 # %% [markdown] colab_type="text" id="Eqc6YFpFvwIq"
 # ## Inference
