@@ -51,10 +51,24 @@ print('\t\u2022 Running on GPU' if tf.test.is_gpu_available() else '\t\u2022 GPU
 # ## Load the Dataset
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 207} colab_type="code" id="bxcg_ZbuLnM3" outputId="33841a52-53e6-4e8a-ecbd-b448bf3c46f5"
+# tfds.Split.ALL has been removed, see
+# https://github.com/tensorflow/datasets/issues/1455
+#
+# subsplit was deprecated and has also been removed,
+# https://github.com/tensorflow/datasets/issues/1998
+#
+# For the new way, see
+# https://www.tensorflow.org/datasets/splits
+
 train_split = 60
 test_val_split = 20
 
-splits = tfds.Split.ALL.subsplit([train_split, test_val_split, test_val_split])
+def splitstr(from_percent, to_percent):
+    return f"train[{from_percent}%:{to_percent}%]+test[{from_percent}%:{to_percent}%]"
+    
+splits = [f"{splitstr(0,train_split)}",
+          f"{splitstr(train_split,train_split+test_val_split)}",
+          f"{splitstr(train_split+test_val_split,100)}"]
 
 dataset, dataset_info = tfds.load('fashion_mnist', split=splits, as_supervised=True, with_info=True)
 
@@ -254,7 +268,7 @@ reloaded_keras_model_from_SavedModel.summary()
 # %% [markdown] colab_type="text" id="FomAlrxnQnm8"
 # ## Saving Models During Training
 #
-# We have seen that when we train a model with a validation set, the value of the validation loss changes through the training process. Since the value of the validation loss is an indicator of how well our model will generalize to new data, it will be great if could save our model at each step of the training process and then only keep the version with the lowest validation loss. 
+# We have seen that when we train a model with a validation set, the value of the validation loss changes through the training process. Since the value of the validation loss is an indicator of how well our model will generalize to new data, it will be great if we could save our model at each step of the training process and then only keep the version with the lowest validation loss. 
 #
 # We can do this in `tf.keras` by using the following callback:
 #
