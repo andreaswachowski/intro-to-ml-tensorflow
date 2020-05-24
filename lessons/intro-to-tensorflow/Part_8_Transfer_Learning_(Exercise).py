@@ -1,6 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: py:percent,ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: percent
@@ -56,10 +57,24 @@ print('\t\u2022 Running on GPU' if tf.test.is_gpu_available() else '\t\u2022 GPU
 # ## Load the Dataset
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 1000} colab_type="code" id="hrbFmp_2WJCc" outputId="80ce0d69-ce2d-4f4e-bff5-89b622e54110"
+# tfds.Split.ALL has been removed, see
+# https://github.com/tensorflow/datasets/issues/1455
+#
+# subsplit was deprecated and has also been removed,
+# https://github.com/tensorflow/datasets/issues/1998
+#
+# For the new way, see
+# https://www.tensorflow.org/datasets/splits
+
 train_split = 60
 test_val_split = 20
 
-splits = tfds.Split.ALL.subsplit([60,20, 20])
+def splitstr(from_percent, to_percent):
+    return f"train[{from_percent}%:{to_percent}%]"
+    
+splits = [f"{splitstr(0,train_split)}",
+          f"{splitstr(train_split,train_split+test_val_split)}",
+          f"{splitstr(train_split+test_val_split,100)}"]
 
 (training_set, validation_set, test_set), dataset_info = tfds.load('cats_vs_dogs', split=splits, as_supervised=True, with_info=True)
 
@@ -257,6 +272,19 @@ plot_times(850)
 
 # %% colab={"base_uri": "https://localhost:8080/", "height": 156} colab_type="code" id="zsNPAHR9o7Gv" outputId="3de71c8e-56d0-495f-d386-ab400b14e4ba"
 ## Solution
+
+model.compile(
+    optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+)
+
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=5)
+
+history = model.fit(
+    training_batches,
+    epochs=100,
+    validation_data=validation_batches,
+    callbacks=[early_stopping],
+)
 
 
 # %% [markdown] colab_type="text" id="VBfxg0GoPdiO"
