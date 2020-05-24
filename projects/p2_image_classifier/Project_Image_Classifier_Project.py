@@ -366,6 +366,7 @@ def process_image(image):
 
 
 
+
 # %% [markdown]
 # To check your `process_image` function we have provided 4 images in the `./test_images/` folder:
 #
