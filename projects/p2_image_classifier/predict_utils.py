@@ -4,6 +4,8 @@ import tensorflow_hub as hub
 
 from PIL import Image
 
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
 
 def process_image(image):
     image_size = 224
