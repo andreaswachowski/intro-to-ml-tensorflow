@@ -1,7 +1,8 @@
+import os
+
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
-
 from PIL import Image
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"

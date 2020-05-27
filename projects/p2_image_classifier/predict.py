@@ -5,7 +5,7 @@ import json
 import os
 import sys
 
-from predict_utils import predict, load_model
+from predict_utils import load_model, predict
 
 
 def exit_if_not_file(filename):
