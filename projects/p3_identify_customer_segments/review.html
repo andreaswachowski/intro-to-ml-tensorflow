@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html data-ng-app="udacity.grading" data-enforce-browser="" class="ng-scope idce_318" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style><style type="text/css">.uib-position-measure{display:block !important;visibility:hidden !important;position:absolute !important;top:-9999px !important;left:-9999px !important;}.uib-position-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll;}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    
+    <title>Udacity Reviews</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://review.udacity.com/assets/images/favicon.ico">
+    <meta name="description" content="Discover online classes taught by top instructors and industry experts. Take courses at your own pace.">
+
+    <meta name="robots" content="noodp">
+
+    <!--
+      These properties are here so social shares of review pages works
+      properly. We decided to let them apply to every page on the site
+      because we only expect people to share the review pages.
+
+      Guidelines obtained from https://moz.com/blog/meta-data-templates-123
+    -->
+
+    <!-- facebook -->
+    <meta property="og:title" content="Look at my Udacity Project Feedback!">
+    <meta property="og:description" content="A review of my work and personalized tips to improve.">
+    <meta property="og:image" content="https://s3-us-west-1.amazonaws.com/udacity-content/images/reviews/facebook-thumbnail-neutral.png ">
+
+    <!-- twitter -->
+    
+    
+    <meta name="twitter:title" content="Udacity Project Feedback">
+    <meta name="twitter:description" content="A review of my work and personalized tips to improve.">
+    <!-- "Twitter Summary card images must be at least 120x120px" -->
+    
+
+    <meta name="application-name" content="Udacity">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="assets/img/logos/udacity/windows_tile/udacity-full-144x144.png">
+
+    <meta name="google-site-verification" content="ELX2btu3VElBKIdvkGj5ESBnJh_Dg9PnWjuCwVkPEkA">
+
+    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="https://review.udacity.com/assets/images/apple-touch-icon.png">
+
+    <link type="text/plain" rel="author" href="http://udacity.com/humans.txt">
+
+    <link href="review_files/css_002.css" rel="stylesheet" type="text/css">
+    <link href="review_files/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="review_files/udacity-base.css" type="text/css">
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="review_files/grading_fa7771cf.css">
+    <!-- endinject -->
+
+    <style>
+    @font-face {
+      font-family: 'Glyphicons Halflings';
+
+      src: url('/assets/fonts/glyphicons/glyphicons-halflings-regular.eot');
+      src: url('/assets/fonts/glyphicons/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/glyphicons/glyphicons-halflings-regular.woff2') format('woff2'), url('/assets/fonts/glyphicons/glyphicons-halflings-regular.woff') format('woff'), url('/assets/fonts/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/fonts/glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    }
+    </style>
+    
+    
+
+  </head>
+  <body data-modal-anti-scroll-helper="" class="responsive ng-scope" ng-controller="MainCtrl as main" style="margin-bottom: 0px;">
+    <!-- ngInclude: main.pageContext.headerURL --><div class="row review-tab-body"> <div class="col-sm-10 col-sm-offset-1"> <div ng-show="isUngradeable()" class="ng-hide"> <div class="row row-gap-medium"></div> <section ng-show="isCurrentTab('feedback')" class="" style=""> <div class="ungradeable-tab"> <h2 class="result-label ng-scope" translate="">Unable to review</h2> <div ng-hide="submission.ungradeable_tag === 'plagiarism'" class=""> <p class="ungradeable-info ng-scope" translate="">Your project could not be reviewed. Please resubmit after you address the issue noted below by the reviewer.</p> <p class="result-reason ng-isolate-scope" marked="submission.result_reason"></p> </div> <div ng-show="submission.ungradeable_tag === 'plagiarism'" class="ng-hide"> <p class="ungradeable-info"> <span translate="" class="ng-scope">Key parts of your submission were the same as another student's submission or an online source.</span> <span>Please resubmit after you address the issue noted below by the reviewer.</span> </p> <p class="ungradeable-info ng-hide" ng-show="submission.plagiarism_source_url"> </p><h4 translate="" style="display: inline;" class="ng-scope">Potential Source URL:</h4> <a href="" class="ng-binding"></a> <p></p> <p class="result-reason ng-isolate-scope" marked="submission.result_reason"></p> </div> <div class="row row-gap-small"></div> <!-- ngIf: isResubmittable() --> <!-- ngIf: submission.archive_url --><div ng-if="submission.archive_url" class="row row-gap-small ng-scope" style=""> <div class="col-xs-12 text-center wide-and-bold"> <a href="https://review-api.udacity.com/api/v1/submissions/2408720/archive" download="" class="ng-binding"><img src="review_files/download-icon.svg" class="img-initial icon-medium">Download project files</a> </div> </div><!-- end ngIf: submission.archive_url --> <!-- ngIf: submission.url --> <div class="row row-gap-small">&nbsp;</div> </div> </section> <section ng-show="isCurrentTab('history')" class="ng-hide" style=""> <!-- ngIf: pastReviews !== undefined --><div reviews-list="" ng-if="pastReviews !== undefined" reviews="pastReviews" this-review="submission" class="ng-scope ng-isolate-scope"><h2 class="review-list-name current-review-name h-slim"> <!-- ngIf: thisReview.status !== 'canceled' --><span ng-if="thisReview.status !== 'canceled'" class="ng-binding ng-scope" style=""> Review #1 </span><!-- end ngIf: thisReview.status !== 'canceled' --> <!-- ngIf: thisReview.status === 'canceled' --> <span class="ng-binding"> (this review)</span> </h2> <!-- ngIf: thisReview.completed_at --><small class="text-muted ng-scope" ng-if="thisReview.completed_at" style=""> <!-- ngIf: thisReview.status !== 'canceled' --><span ng-if="thisReview.status !== 'canceled'" translate="" class="ng-scope">Reviewed</span><!-- end ngIf: thisReview.status !== 'canceled' --> <!-- ngIf: thisReview.status === 'canceled' --> <span> <span am-time-ago="thisReview.completed_at">1h ago</span></span> </small><!-- end ngIf: thisReview.completed_at --> <!-- ngIf: !thisReview.completed_at --> <div class="text-uppercase submission-notes-header ng-scope" translate="">student notes</div> <div class="submission-notes ng-isolate-scope" marked="thisReview.notes || '_None provided_'"><p>Whew,
+ that was a lot of work. I am a bit late with the submission because I 
+did not have time during some of the last weekends, but I hope it will 
+be fine nevertheless. Looking forward to the feedback, many thanks in 
+advance for reviewing!</p>
+</div> <!-- ngIf: filteredReviews.length > 1 --> <!-- ngRepeat: review in filteredReviews --><!-- ngIf: filteredReviews.length > 1 --><!-- end ngRepeat: review in filteredReviews --> <!-- ngIf: errorMessage --> <div class="row row-gap-large"></div> </div><!-- end ngIf: pastReviews !== undefined --> </section> </div> <div ng-hide="isUngradeable()" class=""> <div class="row row-gap-medium"></div> <section ng-show="isCurrentTab('history')" class="ng-hide" style=""> <!-- ngIf: pastReviews !== undefined --><div reviews-list="" ng-if="pastReviews !== undefined" reviews="pastReviews" this-review="submission" is-career="currentProject.is_career" class="ng-scope ng-isolate-scope"><h2 class="review-list-name current-review-name h-slim"> <!-- ngIf: thisReview.status !== 'canceled' --><span ng-if="thisReview.status !== 'canceled'" class="ng-binding ng-scope" style=""> Review #1 </span><!-- end ngIf: thisReview.status !== 'canceled' --> <!-- ngIf: thisReview.status === 'canceled' --> <span class="ng-binding"> (this review)</span> </h2> <!-- ngIf: thisReview.completed_at --><small class="text-muted ng-scope" ng-if="thisReview.completed_at" style=""> <!-- ngIf: thisReview.status !== 'canceled' --><span ng-if="thisReview.status !== 'canceled'" translate="" class="ng-scope">Reviewed</span><!-- end ngIf: thisReview.status !== 'canceled' --> <!-- ngIf: thisReview.status === 'canceled' --> <span> <span am-time-ago="thisReview.completed_at">1h ago</span></span> </small><!-- end ngIf: thisReview.completed_at --> <!-- ngIf: !thisReview.completed_at --> <div class="text-uppercase submission-notes-header ng-scope" translate="">student notes</div> <div class="submission-notes ng-isolate-scope" marked="thisReview.notes || '_None provided_'"><p>Whew,
+ that was a lot of work. I am a bit late with the submission because I 
+did not have time during some of the last weekends, but I hope it will 
+be fine nevertheless. Looking forward to the feedback, many thanks in 
+advance for reviewing!</p>
+</div> <!-- ngIf: filteredReviews.length > 1 --> <!-- ngRepeat: review in filteredReviews --><!-- ngIf: filteredReviews.length > 1 --><!-- end ngRepeat: review in filteredReviews --> <!-- ngIf: errorMessage --> <div class="row row-gap-large"></div> </div><!-- end ngIf: pastReviews !== undefined --> </section> <section class="code-section ng-hide" ng-show="isCurrentTab('code')"> <!-- ngIf: files && currentRubric --><div code-review="" ng-if="files &amp;&amp; currentRubric" files="files" rubric="currentRubric" allow-comments="false" class="ng-scope ng-isolate-scope"><div ng-show="allowComments" class="ng-hide" style=""> <input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="filterPattern" placeholder="File filter (e.g. &quot;readme.md&quot;, &quot;.css&quot;, &quot;src/lib/*.js&quot;)" aria-label="File filter" style=""> <div class="row row-gap-small"></div> </div> <!-- ngRepeat: file in files --> </div><!-- end ngIf: files && currentRubric --> <div class="row row-gap-medium"></div> </section> <section ng-show="isCurrentTab('annotation')" class="ng-hide"> <div class="row row-gap-large"> <div class="col-xs-12 annotation-text ng-scope" translate="">Your reviewer has provided annotations for your project</div> </div> <div class="row row-gap-medium"> <div class="col-xs-12"> <a class="btn btn-primary btn-sm ng-binding" href="" download="" _target="_blank">Download annotations</a> </div> </div> <div class="row row-gap-huge"></div> </section> <!-- ngIf: critiquesAccessor --><section ng-if="critiquesAccessor" ng-show="isCurrentTab('feedback')" class="ng-scope" style=""> <!-- ngIf: hasFeedback && submission.result --><div ng-if="hasFeedback &amp;&amp; submission.result" class="flex-bio ng-scope" ng-class="{'send-right': currentProject.is_career}"> <h2 ng-show="!currentProject.is_career" class="result-label h-slim-top ng-binding"> Meets Specifications <!-- ngIf: doesNotMeetCount > 0 --> </h2> <!-- ngIf: currentProject.is_career && hasMentor --> </div><!-- end ngIf: hasFeedback && submission.result --> <!-- ngIf: submission.general_comment --><div ng-if="submission.general_comment" class="row row-gap-medium ng-scope"> <div class="col-xs-12 ng-isolate-scope" marked="submission.general_comment"><p>Very
+ impressive submission here! Congratulations on completing this project.
+ It seems that you have acquired great knowledge of un supervised 
+learning algorithm, specially clustering, and are now ready to apply it 
+on your own problems.<br>Keep doing this great job! Keep experimenting and be curious.<br>All the best for your future.<br>Happy Learning!!</p>
+</div> </div><!-- end ngIf: submission.general_comment --> <div critiques-editor="" critiques-accessor="critiquesAccessor" editable="false" is-career="currentProject.is_career" class="ng-isolate-scope"><!-- ngRepeat: section in critiquesAccessor.getSections() --><div ng-repeat="section in critiquesAccessor.getSections()" class="ng-scope"> <div section-critiques="" section="section" critiques="critiquesAccessor.getCritiques(section.id)" editable="editable" failed-required-placeholder="failedRequiredPlaceholder" passed-required-placeholder="passedRequiredPlaceholder" optional-placeholder="optionalPlaceholder" state="sectionCritiquesState[section.id]" is-career="isCareer" class="ng-isolate-scope"><div> <div class="row row-gap-small"></div> <h2 class="section-name ng-binding"> Preprocessing </h2> <div> <!-- ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>All missing values have been re-encoded in a consistent way as NaNs.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Good
+ job writing the code to handle the missing value cases. You could 
+improve the code  by giving special attention to the special encoding of
+ the ‘X’ and ‘XX’ cases compared to the others.<br>Convert data that 
+matches a 'missing' or 'unknown' value code into a numpy NaN value. You 
+might want to see how much data takes on a 'missing' or 'unknown' code, 
+and how much data is naturally missing, as a point of interest. You may 
+like to enhance your knowledge on this topic by using below link</p>
+<p><a href="https://www.geeksforgeeks.org/working-with-missing-data-in-pandas/" target="_blank">https://www.geeksforgeeks.org/working-with-missing-data-in-pandas/</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Columns
+ with a large amount of missing values have been removed from the 
+analysis. Patterns in missing values have been identified between other 
+columns.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Well
+ done!! Nice work identifying and removing the six outlier columns and 
+noting patterns in the number of missing values across columns. Columns 
+with a large amount of missing values have been removed. the six outlier
+ columns you found is right selection.<br>['TITEL_KZ' 'AGER_TYP' 'KK_KUNDENTYP' 'KBA05_BAUMAX' 'GEBURTSJAHR'  'ALTER_HH']<br>You may like to enhance your knowledge on this topic by using below links<br><a href="https://machinelearningmastery.com/handle-missing-data-python/" target="_blank">https://machinelearningmastery.com/handle-missing-data-python/</a><br><a href="https://towardsdatascience.com/cleaning-missing-values-in-a-pandas-dataframe-a88b3d1a66bf" target="_blank">https://towardsdatascience.com/cleaning-missing-values-in-a-pandas-dataframe-a88b3d1a66bf</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Mixed-type features have been explored, resulting in re-engineered features.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>You
+ have correctly re-engineered two features each from the required 
+mixed-type variables, PRAEGENDE_JUGENDJAHRE and CAMEO_INTL_2015!<br>Your decision to drop the other mixed-type features is correct as well. </p>
+<p>Excellent work in re engineering mixed type variables 
+PRAEGENDE_JUGENDJAHRE and CAMEO_INTL_2015 Other mixed type variables can
+ also be re engineered by looking at data dictionary .<br>Nice work 
+generating the new features. Very creative work in flipping around the 
+values of the ‘DECADE’ and 'MOVEMENT' variable for easier 
+interpretability. You may like to learn more about feature engineering 
+here<br><a href="https://elitedatascience.com/feature-engineering-best-practices" target="_blank">https://elitedatascience.com/feature-engineering-best-practices</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>The
+ data has been split into two parts based on how much data is missing 
+from each row. The subsets have been compared to see if they are 
+qualitatively different from one another.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>A
+ suggestion for your discussion: add a sentence to make sure that it is 
+clear whether you should just drop the data completely, or if it should 
+be treated as special. See the last rubric point in Clustering for a 
+reason why this is important. You should also try using the seaborn 
+library’s count plot function to visualize the distribution of values, 
+rather than just print out a summary.<br>Data has been split in two 
+parts from each row. It was divided into two subsets based on the number
+ of missing values in each row. This section also compared the 
+distribution of values where there are no or few missing values, between
+ the two subsets. It was also justified that the split-off data is 
+qualitatively different from the main part of the data.</p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Categorical features have been explored and handled based on if they are binary or multi-level.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>You
+ did a good job using get_dummies() to generate the dummy variables for 
+all of the categorical features. However, this generated a very large 
+number of features which may have diluted the variability captured by 
+components in the PCA step. The binary variables could have been kept 
+as-is, since the value of one of the dummies absolutely determines the 
+value of the other dummy. For the other features, you should check if 
+any of the are related to one another to see if any are immediately 
+redundant. For example, you might check the relationship between 
+LP_FAMILIE_FEIN and LP_FAMILIE_GROB, or CAMEO_DEUG_2015 and 
+CAMEO_DEU_2015. If you see a redundant feature, then you can leave it 
+out to make your later inferences clearer.<br>You may like to learn more about pd.get_dummies here<br><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html" target="_blank">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Dataset
+ includes all original features with appropriate data types and 
+re-engineered features. Features that are not formatted for further 
+analysis have been excluded.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Well
+ Done !! Dataset includes all original features with appropriate data 
+types and re-engineered features. Nice here! The submission did drop 
+features which are no longer relevant in their original formulations 
+before moving on. Only the values derived from it in the engineered 
+features created were retained. Awesome!</p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>A
+ function applying pre-processing operations has been created, so that 
+the same steps can be applied to the general and customer demographics 
+alike.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>A
+ function applying pre-processing operations has been created. Nice work
+ !! it's important to look ahead to the future and realize that you'll 
+need to perform the same cleaning steps on the customer demographics 
+data. Nice work putting it all together as part of the clean_data 
+function.<br><a href="https://towardsdatascience.com/data-cleaning-with-python-and-pandas-detecting-missing-values-3e9c6ebcf78b" target="_blank">https://towardsdatascience.com/data-cleaning-with-python-and-pandas-detecting-missing-values-3e9c6ebcf78b</a></p>
+<p>Great work done in the clean_data() function. Feature trimming, 
+re-encoding, and engineering for demographics data was applied 
+appropriately. Nicely done!</p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --> </div> </div> </div> </div><!-- end ngRepeat: section in critiquesAccessor.getSections() --><div ng-repeat="section in critiquesAccessor.getSections()" class="ng-scope"> <div section-critiques="" section="section" critiques="critiquesAccessor.getCritiques(section.id)" editable="editable" failed-required-placeholder="failedRequiredPlaceholder" passed-required-placeholder="passedRequiredPlaceholder" optional-placeholder="optionalPlaceholder" state="sectionCritiquesState[section.id]" is-career="isCareer" class="ng-isolate-scope"><div> <div class="row row-gap-small"></div> <h2 class="section-name ng-binding"> Feature Transformation </h2> <div> <!-- ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Feature
+ scaling has been properly applied to the demographics data. Imputation 
+has been performed to remove remaining missing values.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>sklearn’s
+ Imputer and StandardScaler classes have been used to fill in missing 
+data and scale the values. However, to meet specifications for this 
+rubric point, your report should provide more justification on your 
+decisions here. What are the benefits and downsides of taking the 
+approach you chose. you may like to learn more about StandardScaler here<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html" target="_blank">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Weights
+ on at least three principal components are used to make inferences on 
+correlations between original features of the data. General meanings are
+ ascribed to principal components where applicable.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Impressive
+ analysis! Weights on three principal components are used to make 
+inferences on correlations between the original features of the data. 
+The discussion clearly interprets the feature weights correctly<br><a href="https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/principal-components/interpret-the-results/key-results/" target="_blank">https://support.minitab.com/en-us/minitab/18/help-and-how-to/modeling-statistics/multivariate/how-to/principal-components/interpret-the-results/key-results/</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Principal
+ component analysis has been applied to the data to create transformed 
+features. A variability analysis has been performed to justify a 
+decision on the number of features to retain.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>sklearn’s
+ Principal Components analysis have been used . However, to meet 
+specifications for this rubric point, your report should provide more 
+justification on your decisions here. You may like to take help from<br><a href="https://www.geeksforgeeks.org/principal-component-analysis-with-python/" target="_blank">https://www.geeksforgeeks.org/principal-component-analysis-with-python/</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --> </div> </div> </div> </div><!-- end ngRepeat: section in critiquesAccessor.getSections() --><div ng-repeat="section in critiquesAccessor.getSections()" class="ng-scope"> <div section-critiques="" section="section" critiques="critiquesAccessor.getCritiques(section.id)" editable="editable" failed-required-placeholder="failedRequiredPlaceholder" passed-required-placeholder="passedRequiredPlaceholder" optional-placeholder="optionalPlaceholder" state="sectionCritiquesState[section.id]" is-career="isCareer" class="ng-isolate-scope"><div> <div class="row row-gap-small"></div> <h2 class="section-name ng-binding"> Clustering </h2> <div> <!-- ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Multiple
+ cluster counts have been tested on the general demographics data, and 
+the average point-centroid distances have been reported. A decision on 
+the number of clusters to use is made and justified.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Nice
+ work !! choice in clusters has come from a turning point or elbow in 
+the curve. To find a good amount of centroids, the K-Means classifier 
+from scikit learn can be fitted for several possible cluster sizes. The 
+score for each cluster size was taken after the fitting process from 
+KMeans.inertia_ attribute which the documentation describes as the Sum 
+of squared distances of samples to their closest cluster center and thus
+ can be used as score. You may like to to read more from below link<br><a href="https://pythonprogramminglanguage.com/kmeans-elbow-method/" target="_blank">https://pythonprogramminglanguage.com/kmeans-elbow-method/</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>Cleaning,
+ feature transformation, dimensionality reduction, and clustering models
+ are applied properly to the customer demographics data.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>practice
+ is to only call the transform method with our fitted scalers and 
+objects on the unseen data. This ensures that the data remains truly 
+unseen and does not get included in our overall training/processing. 
+Here's an excellent discussion on the same.<br><a href="https://stackoverflow.com/questions/43675665/when-scale-the-data-why-the-train-dataset-use-fit-and-transform-but-the-te" target="_blank">https://stackoverflow.com/questions/43675665/when-scale-the-data-why-the-train-dataset-use-fit-and-transform-but-the-te</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --><div ng-repeat="critique in critiques" class="ng-scope"> <div row="" row-gap-small="" col-xs-12="" bg-white="" scroll-if="isCurrentEditingCritique(critique.id)" class="ng-isolate-scope"> <!-- ngIf: isEditingCritique(critique.id) --> <!-- ngIf: !isEditingCritique(critique.id) --><div class="critique-container ng-scope ng-isolate-scope" critique-view="" critique="critique" editable="editable" is-career="isCareer" edit-clicked="setEditingCritique(critique.id, true)" ng-if="!isEditingCritique(critique.id)"><div class="critique-view-header"> <div class="row result-label"> <div class="col-sm-1"> <div class="result-spacing"> <span ng-hide="isCareer" class="result-icon passed text-center"></span> </div> </div> <div class="col-xs-12 col-sm-10 critique-description ng-isolate-scope" marked="rubricItem.passed_description"><p>A
+ comparison is made between the general population and customers to 
+identify segments of the population that are central to the sales 
+company's base as well as those that are not.</p>
+</div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: editable && critiqueLocked() --> </div> <!-- ngIf: !!critique.observation --><div ng-if="!!critique.observation" class="critique-view-body ng-scope"> <div class="row"> <div class="col-xs-12 col-sm-10 col-sm-offset-1"> <div class="p-slim ng-isolate-scope" marked="critique.observation"><p>Brilliant
+ work here! The plots are amazing! Your plot for accounting the percent 
+differences between the clusters is great as well! You've correctly 
+accounted for the over- and under-represented clusters in the data and 
+given a final description and recommendation!</p>
+<p>Comparison is made between the general population and customers to 
+identify segments. Good work !! Consider the proportion of persons in 
+each cluster for the general population, and the proportions for the 
+customers. If we think the company's customer base to be universal, then
+ the cluster assignment proportions should be fairly similar between the
+ two. If there are only particular segments of the population that are 
+interested in the company's products, then we should see a mismatch from
+ one to the other.<br><a href="https://whatis.techtarget.com/definition/customer-demographics" target="_blank">https://whatis.techtarget.com/definition/customer-demographics</a><br><a href="https://datascienceplus.com/find-your-best-customers-with-customer-segmentation-in-python/" target="_blank">https://datascienceplus.com/find-your-best-customers-with-customer-segmentation-in-python/</a><br><a href="https://medium.com/@kristenkehrer/how-to-use-customer-segmentation-to-learn-f49e82b9a959" target="_blank">https://medium.com/@kristenkehrer/how-to-use-customer-segmentation-to-learn-f49e82b9a959</a></p>
+</div> </div> </div> </div><!-- end ngIf: !!critique.observation --> <!-- ngIf: editable && !critiqueLocked() --> </div><!-- end ngIf: !isEditingCritique(critique.id) --> </div> </div><!-- end ngRepeat: critique in critiques --> </div> </div> </div> </div><!-- end ngRepeat: section in critiquesAccessor.getSections() --> <div class="row"> <!-- ngIf: !editable && submission.general_comment --> </div> <div class="row"> <!-- ngIf: !(state && state.audit) --><ng-form ng-if="!(state &amp;&amp; state.audit)" name="general-comment-form" class="ng-pristine ng-valid ng-scope"> <!-- ngIf: editable --> </ng-form><!-- end ngIf: !(state && state.audit) --> </div> <div class="row row-gap-small"></div> </div> <div class="row row-gap-small"></div> <!-- ngIf: isResubmittable() --> <div class="row row-gap-small"> <div class="col-xs-12 text-center"> <!-- ngIf: submission.archive_url --><a class="wide-and-bold ng-binding ng-scope" ng-if="submission.archive_url" href="https://review-api.udacity.com/api/v1/submissions/2408720/archive" download=""> <img src="review_files/download-icon.svg" class="icon-medium" alt="Download">&nbsp;Download Project </a><!-- end ngIf: submission.archive_url --> </div> </div> <!-- ngIf: commentsCount > 0 --> <div class="row row-gap-medium"></div> </section><!-- end ngIf: critiquesAccessor --> <section ng-show="isCurrentTab('audit')" class="ng-hide"> <div audit-tab="" submission="submission" state="auditTabState" class="ng-isolate-scope"><!-- ngIf: auditCritiquesAccessor --> </div> </section> </div>  </div>  </div>
+    
+
+    <!-- ngInclude: main.pageContext.footerURL -->
+
+    
+    
+    
+
+    
+    
+    
+    <!-- endinject -->
+  
+
+<div class="hiddendiv common"></div></body></html>
