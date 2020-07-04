@@ -301,10 +301,15 @@ nan_by_row.head()
 nan_by_row.describe()
 
 # %%
+nan_by_row.value_counts().head(10)
+
+# %%
 nan_by_row.hist(bins=80)
 
 # %% [markdown]
-# The vast majority of rows (> 600000) seems complete. As for the outliers, we notice there are comparatively many rows that miss 40 to 50 values. (There are a lot that miss at least one attribute, to be sure, as well.)
+# The vast majority of rows (around 623000) are complete. As for the outliers, we notice there are comparatively many rows that miss 40 to 50 values. (There are a lot that miss at least one attribute, to be sure, as well.)
+#
+# Note the conclusion that can be drawn by comparing the number of complete rows with the column analysis: The column with the most missing values `KKK` had (judging by the bar chart) around 150000 missing values. With approx 890k rows in total, thus 265k rows with missing values, the many tens (even hundreds) of thousands missing values in dozens of columns are nevertheless all found in those 265k rows, so the missing values cluster together. There are probably a few groups of values, where either all or none of the values are available.
 
 # %%
 nan_by_row.hist(bins=80, log=True)
@@ -327,9 +332,9 @@ for max_attr in max_attributes:
           .format(max_attr, rows_with_too_many_missing_attributes, percentage))
 
 # %% [markdown]
-# We can see that we don't gain much by allowing rows with a lot of missing attributes. For example, it makes virtually no difference to limit ourselves to rows that have more than 20 or more than 30 missing attributes. In other words, rows that have more than 20 missing attributes will with high probability have in fact more than 30 missing attributes.
+# We can see that we don't gain much by allowing rows with a lot of missing attributes. 30% of rows miss at least one attribute - but we don't want to remove 30% of our dataset. But we could savely remove rows with >20 missing values compared to >30: We would only lose a few hundred additional rows in that case. Put another way, rows that have more than 20 missing attributes will with high probability have in fact more than 30 missing attributes anyway.
 #
-# We lose another 2 percentage points by tightening the criterion to only include rows with at most 10 missing attributes, so that seems a good cut-off:
+# Tightening the criterion even further, we lose another 2 percentage points when we focus on rows with at most 10 missing attributes. This still amounts to just 12.5% lost records, so that seems a good cut-off:
 
 # %%
 MAX_NAN_VALUES_PER_ROW = 10
@@ -369,7 +374,7 @@ for col in ['GEBAEUDETYP','FINANZ_SPARER', 'NATIONALITAET_KZ', 'SEMIO_SOZ', 'ALT
 # %% [markdown]
 # #### Discussion 1.1.3: Assess Missing Data in Each Row
 #
-# The comparison reveals major differences. For the chosen columns, `NATIONALITAET_KZ` is the one that looks essentially identical, and `ALTERSKATEGORIE_GROB` and `GEBAEUDETYP` might be very loosely seen as somewhat similar. But `FINANZ_SPARER`, `SEMIO_SOZ` compared across the datasets show no similarity whatsoever.
+# The comparison reveals major differences. For the chosen columns, `NATIONALITAET_KZ` is the one that looks essentially identical, and `GEBAEUDETYP` might be very loosely seen as somewhat similar. With `ALTERSKATEGORIE_GROB`, value 4 is significantly more frequent in rows with few missing values than in the other categoriy, and the distributions of `FINANZ_SPARER` and `SEMIO_SOZ` show no similarity whatsoever. In the rows with many missing values, value 4 of `FINANZSPARER` is heavily overrepresented, as is value 2 for `SEMIO_SOZ`. Because we seem to disproportionally exclude those groups, this might skew final results.
 
 # %% [markdown]
 # Continue with the data that misses only few values:
@@ -510,9 +515,9 @@ azdias[['PRAEGENDE_JUGENDJAHRE','MOVEMENT',]].head(10)
 
 
 # %% [markdown]
-# Now for the decade, I first used a Pandas Interval, but that won't work with the Imputer.
+# Now for the decade, I first used an actual Pandas Interval type, but that won't work with the Imputer, so instead I use simple integers:
 #
-# The interval-type variable will contain `40` to represent the 40s, `50` for the 50s up to `90` for the 90s. We will create a mapper mapping from an individual value between 1 and 14 to that number, then use df.map() to create the `DECADE` column:
+# `40` represents the 40s, `50` the 50s up to `90` for the 90s. The goal is a dict that maps from any of the individual values 1 to 14 to the decade, then use df.map() to create the `DECADE` column:
 
 # %%
 def create_praegende_jugendjahre_to_decade_mapper():
@@ -547,7 +552,7 @@ azdias.drop(columns=['PRAEGENDE_JUGENDJAHRE'], axis='columns', inplace=True)
 
 
 # %% [markdown]
-# For reuse (in particular, the cleanup function further down) it will be more convenient to group those things together:
+# For reuse (in particular, the cleanup function further down) it will be more convenient to group those things together. Even if it's a one-liner, I will define many of those smaller functions that are then easily reused in the clean-up function defined later:
 
 # %%
 def reengineer_praegende_jugendjahre(df):
@@ -647,6 +652,8 @@ reengineer_other_mixed_attributes(azdias)
 # If there are other re-engineering tasks you need to perform, make sure you
 # take care of them here. (Dealing with missing data will come in step 2.1.)
 
+# I think we are fine, there's not more to do here.
+
 # %%
 # Do whatever you need to in order to ensure that the dataframe only contains
 # the columns that should be passed to the algorithm functions.
@@ -654,6 +661,7 @@ reengineer_other_mixed_attributes(azdias)
 feat_info.groupby('type').count()['attribute']
 
 # %%
+# Check we have only numerical values left. No output means all is good.
 cat_cols_in_azdias = list(set(feat_info[feat_info.type == 'categorical']['attribute']) & set(azdias.columns))
 for cat_col in cat_cols_in_azdias:
     if azdias[cat_col].dtype != 'float64':
@@ -745,7 +753,9 @@ print(azdias_scaled.shape)
 #
 # The investigation of nan values shows a large percentage of values across all columns is still not initialized. At minimum, a column is missing around 20% of data (= 185102/891221).
 #
-# Removing all rows with nan values could leave us with too little data or skew the distributions. In general, imputation is a complicated topic, of which I know too little at the moment. To advance this project, I will apply a simple mean imputation for now, but from a quick Google search (see references), there's a lot more to learn.
+# Removing all rows with nan values could leave us with too little data or skew the distributions. In general, imputation is a complicated topic, of which I know too little at the moment. To advance this project, I applied a straightforward imputation for now. I suppose one could make a case for different imputation methods for different types of values, e.g., use "most frequent" for categorical values, but `mean` for numerical or similar.
+#
+# From a quick Google search (see references), there's a lot more to learn:
 #
 # * https://www.theanalysisfactor.com/seven-ways-to-make-up-data-common-methods-to-imputing-missing-data/
 # * https://www.theanalysisfactor.com/missing-data-two-recommended-solutions/
@@ -893,8 +903,6 @@ print_pca_component(pca.components_[2], 5, True)
 # %% [markdown]
 # ### Discussion 2.3: Interpret Principal Components
 #
-# (Double-click this cell and replace this text with your own text, reporting your observations from detailed investigation of the first few principal components generated. Can we interpret positive and negative values from them in a meaningful way?)
-#
 # #### First component
 #
 # The most relevant positively correlated features are `MOBI_REGIO` and `KBA05_ANTG1`. The higher the `MOBIO_REGIO` value, the lower the movement, and a high `KBA05_ANTG1` value signifies a high fraction of home owners - those clearly go hand in hand. Likewise, this explains all of the five negatively correlated features. The principal component identifies high proportion of home builders (i.e. a low value for `FINANZ_HAUSBAUER`), and _not_ low-income earners (i.e. an inverse correlation to the original `LP_STATUS_GROB` value being 1). Most significant is a low value of `HH_EINKOMMEN_SCORE`, that is, the household income which tends to be the highest. As expected, this is correlated with `WEALTH`, the re-engineered value from `CAMEO_INTL_2015`. A low value for `WEALTH` also represents wealthy households.
@@ -903,9 +911,11 @@ print_pca_component(pca.components_[2], 5, True)
 #
 # #### Second component
 #
-# In a nutshell, the second component correlates with a hedonistic lifestyle that is unconcerned with financial matters: The lower a person exhibits a saver, investor, or at least low-key financial mind (`FINANZ_SPARER`, `FINANZ_ANLEGER`, `FINANZ_UNAUFFAELLIGER`), the more it correlates with this component. Consequently, we find `FINANZTYP_1`, "low financial interest". We also find positive values for `SEMIO_REL`, thus a low affinity to religion, underscoring the hedonism.
+# In a nutshell, the second component correlates with a (idealistic? hedonistic?) lifestyle that is not geared towards accumulating wealth: The values for `FINANZ_SPARER`, `FINANZ_ANLEGER`, `FINANZ_UNAUFFAELLIGER` are positively correlated, but due to the value mapping (see data dictionary) this corresponds to a low or very low propensity in this regard. Consequently, `FINANZTYP_1`, representing "low financial interest" correlates positively, too. We also find positive values for `SEMIO_REL`, thus a low affinity to religion.
 #
-# `ALTERSKATEGORIE_GROB` is inversely correlated, so this component identifies preferrably younger generations (cf. the third component where it's the opposite). I do not understand why `FINANZ_VORSORGER` (be preapred) should be at the opposite end to `FINANZ_SPARER` (money saver), it's hard to judge from the data dictionary alone. A high affinity to being sensual-minded (i.e. a low value for `SEMIO_LUST`) and a propensity for being a heavy shopper (low values for `RETOURTYP_BK_S`) affirms, again, the hedonistic outlook.
+# `ALTERSKATEGORIE_GROB` is inversely correlated, so this component identifies preferrably younger generations (cf. the third component where it's the opposite). I do not understand why `FINANZ_VORSORGER` (be prepared) should be at the opposite end to `FINANZ_SPARER` (money saver), it's hard to judge from the data dictionary alone. A high affinity to being sensual-minded (i.e. a low value for `SEMIO_LUST`) and a propensity for being a heavy shopper (low values for `RETOURTYP_BK_S`) affirms a hedonistic outlook.
+#
+# All this I associate with younger generations open to new experiences and more prone to shop than to save, but financially not well equipped and, either due to life-style or profession, not likely to become well off anytime soon.
 #  
 #
 # #### Third component
@@ -993,7 +1003,7 @@ plt.hist(azdias_labels)
 #
 # I initially tried 1, 2, 3, ... 14 clusters but there was still a noticeable slope at the end of the score. I then tried `range(2,40,4)` with a similar result, so I then concentrated on the first 20 and investigated just the change in slope. Anything between 5 to 10 clusters seems to be a judgment call. Having said that, the slope definitely flattens: A result from the 2nd analysis was that, whereas a decrease in SSE of 0.2 requires a cluster increase to 10 initially, it takes up to cluster 38 to reach another 0.2 SSE decrease.
 #
-# Because the curve's slope remains fairly constant after 10 clusters, that is the number that will be used for the remaining analysis.
+# Because the curve's slope remains fairly constant after 10 clusters, that is the number I will use for the remaining analysis.
 
 # %% [markdown]
 # ### Step 3.2: Apply All Steps to the Customer Data
@@ -1088,22 +1098,21 @@ create_barplot(ax2, 'customers', 'Customer Data')
 # What kinds of people are part of a cluster that is overrepresented in the
 # customer data compared to the general population?
 
-investigated_cluster = 8
-cluster_centroid_ = pca.inverse_transform(kmeans.cluster_centers_[investigated_cluster])
+overrepresented_cluster = 8
+overrepresented_component = pca.inverse_transform(kmeans.cluster_centers_[overrepresented_cluster])
 
-# %%
-print_pca_component(cluster_centroid_, 5)
-print_pca_component(cluster_centroid_, 5, True)
+print_pca_component(overrepresented_component, 5)
+print_pca_component(overrepresented_component, 5, True)
 
 # %%
 # What kinds of people are part of a cluster that is underrepresented in the
 # customer data compared to the general population?
 
-investigated_cluster = 9 # 0, 1
-cluster_centroid_ = pca.inverse_transform(kmeans.cluster_centers_[investigated_cluster])
+underrepresented_cluster = 9 # 0, 1
+underrepresented_component = pca.inverse_transform(kmeans.cluster_centers_[underrepresented_cluster])
 
-print_pca_component(cluster_centroid_, 5)
-print_pca_component(cluster_centroid_, 5, True)
+print_pca_component(underrepresented_component, 5)
+print_pca_component(underrepresented_component, 5, True)
 
 # %% [markdown]
 # ### Discussion 3.3: Compare Customer Data to Demographics Data
@@ -1111,8 +1120,12 @@ print_pca_component(cluster_centroid_, 5, True)
 # The bar charts for the cluster proportions show clear differences between the general population and the target audience. For example, while cluster 0, 1, and 9 account in total for approx. 24% of the general population, just 2% of the target audience is found here. On the other hand, cluster 8 contains approx. a tenth of the general population, but around a quarter of the customer group. Cluster 3 is noteworthy since it is, with ca. 21%, the largest cluster of the general population, with a slightly smaller value (roughly 18%) in the customer group.
 #
 # As depicted with cluster -1, we had to discard 27% of the customer data due to too many missing values. In the general population, we removed 12% of values for the same reason.
+#
+# The overrepresented cluster is similar to the first principal component analyzed in step 2.3. `GREEN_AVANTGARDE`, `MOVEMENT`, and `KBA05_ANTG1` are found in both in the top 3 attributes, and the top five negatively correlated attributes are identical except for `EWDICHTE`, which has been replaced with `PLZ8_ANTG3`. Note that the specific weights differ, but the ordering of features is very similar. Also notice that the overrepresented cluster includes `LP_STATUS_GROB` in both extremes, `LP_STATUS_GROB_5.0` (top earners) and `LP_STATUS_GROB_1.0` (low-income earners).
+#
+# The strongest customer base is hence predominantly found in wealthy, established households.
+#
+# The underrepresented cluster corresponds closely to the second principal component analyzed earlier. Again, we find to a large degree the same arrangement of attributes, leading us to the conclusion that the mail order company would do best in minimizing mailings to "orientation-seeking low-income earners" (this is the meaning of `LP_STATUS_FEIN_2.0`) and to minimalists (`FINANZTYP_1`).
 
 # %% [markdown]
 # > Congratulations on making it this far in the project! Before you finish, make sure to check through the entire notebook from top to bottom to make sure that your analysis follows a logical flow and all of your findings are documented in **Discussion** cells. Once you've checked over all of your work, you should export the notebook as an HTML document to submit for evaluation. You can do this from the menu, navigating to **File -> Download as -> HTML (.html)**. You will submit both that document and this notebook for your project submission.
-
-# %%
